@@ -138,8 +138,7 @@ var dotSS53_x;
 
 function calc(i, dateVal)
 {
-	console.log(i);
-	console.log(dateVal);
+	console.log("person", i, dateVal);
 	
 	var dd = dateVal.split('.')[0];
 	var mm = dateVal.split('.')[1];
@@ -466,8 +465,7 @@ function setCellValue22(id, value)
 	document.getElementById(id).innerHTML = base22(value);
 }
 
-function populateA(i)
-{
+function populateA(i) {
 	setCellValue22("mat1_" + i, dotLL30[i]);
 	setCellValue22("mat2_" + i, dotLL70[i]);
 	setCellValue22("mat3_" + i, (dotLL30[i] + dotLL70[i]));
@@ -476,8 +474,7 @@ function populateA(i)
 	setCellValue22("pat3_" + i, (dotLL10[i] + dotLL50[i]));
 }
 
-function populateB(i)
-{
+function populateB(i) {
 	setCellValue22("cell_a1_" + i, dotLL0[i]);
 	setCellValue22("cell_a2_" + i, dotLL20[i]);
 	setCellValue22("cell_a3_" + i, dotSS11[i]);
@@ -518,8 +515,7 @@ function populateB(i)
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-function setSvg_x()
-{
+function setSvg_x() {
 	svg = svg_x;
 
 	if (typeof(svgLayer_x) != 'undefined' && svgLayer_x != null)
@@ -533,8 +529,7 @@ function setSvg_x()
 	svgLayer = svgLayer_x;
 }
 
-function setSvg_0()
-{
+function setSvg_0() {
 	svg = svg_0;
 
 	if (typeof(svgLayer_0) != 'undefined' && svgLayer_0 != null)
@@ -566,20 +561,19 @@ function setSvg_1()
 
 // ---------------------------------------------------------------
 
-function getAge (element, date) 
-{
-	var self = this;
+function getAge (date) {
 	var arr = date.split(".");
 	var value = (new Date() - new Date(arr[2] + "-" + arr[1] + "-" + arr[0] + "T00:00")) / (1000 * 60 * 60 * 24 * 365);
 	var message = "";
 	if (value < 1) {
 		message = "0 лет";
 	} else if (value > 1 && value < 2) {
-		message = parseInt(value) + " лет";
+		message = parseInt(value) + " год";
 	} else {
 		message = Math.floor(value) + " лет";
 	}
-	element.innerHTML = message;
+	
+	return message;
 };
 
 // ---------------------------------------------------------------
@@ -591,37 +585,38 @@ function calculate() {
 	var dateVal_0 = document.getElementById('inputDate1').value;
 	var dateVal_1 = document.getElementById('inputDate2').value;
 
-	if(dateVal_0.match(dateformat))
-	{	
+	if(dateVal_0.match(dateformat))	{
+		const personIndex = 0;
+		/*title of person section */
 		var age_0 = document.getElementById('age_0');
-		getAge(age_0, dateVal_0);
+		age_0.innerHTML = getAge(dateVal_0);
 
-		calc(0, dateVal_0);
+		calc(personIndex, dateVal_0);
 
 		setSvg_0();
-		fillSvg(0);
+		fillSvg(personIndex);
 
-		populateA(0);
-		populateB(0);
+		populateA(personIndex);
+		populateB(personIndex);
 
 		document.querySelector('#panel1').classList.remove("d-none");
 
-		if(dateVal_0.match(dateformat))
-		{
+		if(dateVal_1.match(dateformat))	{
+			const personIndex = 1;
 			var age_1 = document.getElementById('age_1');
-			getAge(age_1, dateVal_1);
+			age_1.innerHTML = getAge(dateVal_1);
 
-			calc(1, dateVal_1);
+			calc(personIndex, dateVal_1);
 			calc_x();
 
 			setSvg_1();
-			fillSvg(1);
+			fillSvg(personIndex);
 
 			setSvg_x();
 			fillSvgX();
 
-			populateA(1);
-			populateB(1);
+			populateA(personIndex);
+			populateB(personIndex);
 
 			document.querySelector('#panelX').classList.remove("d-none");
 			document.querySelector('#panel2').classList.remove("d-none");
