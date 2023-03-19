@@ -21,6 +21,8 @@ var dotLL60 = [];
 
 var dotCenter = [];
 
+let dotCenterGen = [];
+
 var dotLL10 = [];
 var dotLL30 = [];
 var dotLL50 = [];
@@ -132,12 +134,15 @@ var dotSS51_x;
 var dotSS52_x;
 var dotSS53_x;
 
+let sky = [];
+let earth = [];
+let personalDestinationResult = [];
+
 /* ------------------------------------------------------------------------- */
 /* --------- CALCULATE ----------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-function calc(i, dateVal)
-{
+function calc(i, dateVal) {
 	console.log("person", i, dateVal);
 	
 	var dd = dateVal.split('.')[0];
@@ -155,6 +160,8 @@ function calc(i, dateVal)
 	dotLL30[i] = base22(dotLL20[i] + dotLL40[i]);
 	dotLL50[i] = base22(dotLL40[i] + dotLL60[i]);
 	dotLL70[i] = base22(dotLL0[i] + dotLL60[i]);
+
+	dotCenterGen[i] = base22(dotLL10[i] + dotLL30[i] + dotLL50[i] + dotLL70[i]);
 
 	dotMM02[i] = base22(dotCenter[i] + dotLL0[i]); 
 	dotMM01[i] = base22(dotMM02[i] + dotLL0[i]);
@@ -263,6 +270,16 @@ function calc_x()
 	dotSS52_x = base22(dotMM41_x + dotMM61_x);
 	dotSS53_x = base22(dotMM42_x + dotMM62_x);
 }
+
+/*personal destination*/
+function calcPersonalDestination(personIndex, _sky1, _sky2, _earth1, _earth2) {
+	sky[personIndex] = base22(_sky1 + _sky2);
+	earth[personIndex] = base22(_earth1 + _earth2);
+	personalDestinationResult[personIndex] = base22(sky[personIndex] + earth[personIndex]);
+};
+
+
+/*------------------------ */
 
 /* ------------------------------------------------------------------------- */
 /* --------- BASE 22 ------------------------------------------------------- */
@@ -474,6 +491,13 @@ function populateA(i) {
 	setCellValue22("pat3_" + i, (dotLL10[i] + dotLL50[i]));
 }
 
+function populatePersonalDestination(personIndex) {
+	setCellValue22("sky_" + personIndex, sky[personIndex]);
+	setCellValue22("earth_" + personIndex, earth[personIndex]);
+	setCellValue22("personalDestination_" + personIndex, personalDestinationResult[personIndex]);
+};
+
+
 function populateB(i) {
 	setCellValue22("cell_a1_" + i, dotLL0[i]);
 	setCellValue22("cell_a2_" + i, dotLL20[i]);
@@ -599,6 +623,17 @@ function calculate() {
 		populateA(personIndex);
 		populateB(personIndex);
 
+		calcPersonalDestination(
+			personIndex,
+			dotLL20[personIndex],
+			dotLL60[personIndex],
+			dotLL0[personIndex],
+			dotLL40[personIndex]
+		);
+
+		populatePersonalDestination(personIndex);
+
+
 		document.querySelector('#panel1').classList.remove("d-none");
 
 		if(dateVal_1.match(dateformat))	{
@@ -617,6 +652,16 @@ function calculate() {
 
 			populateA(personIndex);
 			populateB(personIndex);
+
+			calcPersonalDestination(
+				personIndex,
+				dotLL20[personIndex],
+				dotLL60[personIndex],
+				dotLL0[personIndex],
+				dotLL40[personIndex]
+			);
+	
+			populatePersonalDestination(personIndex);
 
 			document.querySelector('#panelX').classList.remove("d-none");
 			document.querySelector('#panel2').classList.remove("d-none");
