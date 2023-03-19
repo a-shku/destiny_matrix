@@ -140,6 +140,9 @@ let personalDestinationResult = [];
 
 let paternity = [];
 let maternity = [];
+let genResult = [];
+
+let commonResult = [];
 
 /* ------------------------------------------------------------------------- */
 /* --------- CALCULATE ----------------------------------------------------- */
@@ -488,15 +491,15 @@ function setCellValue22(id, value)
 function populateA(i) {
 	paternity[i] = base22(dotLL30[i] + dotLL70[i]);
 	maternity[i] = base22(dotLL10[i] + dotLL50[i]);
-	
+	genResult[i] = base22(paternity[i] + maternity[i]);
 	setCellValue22("mat1_" + i, dotLL30[i]);
 	setCellValue22("mat2_" + i, dotLL70[i]);
 	setCellValue22("mat3_" + i, (dotLL30[i] + dotLL70[i]));
 	setCellValue22("pat1_" + i, dotLL10[i]);
 	setCellValue22("pat2_" + i, dotLL50[i]);
 	setCellValue22("pat3_" + i, (dotLL10[i] + dotLL50[i]));
-	debugger;
-	setCellValue22("genResult_" + i, paternity[i] + maternity[i]);
+
+	setCellValue22("genResult_" + i, base22(genResult[i]));
 }
 
 function populatePersonalDestination(personIndex) {
@@ -506,9 +509,10 @@ function populatePersonalDestination(personIndex) {
 };
 
 function calcSpiritualDestination(personIndex) {
+	commonResult[personIndex] = personalDestinationResult[personIndex] + genResult[personIndex];
 	setCellValue22(`common${personIndex}_1`, personalDestinationResult[personIndex]);
-	setCellValue22(`common${personIndex}_2`, paternity[personIndex] + maternity[personIndex]);
-	setCellValue22(`spiritualDestination_${personIndex}`, personalDestinationResult[personIndex]);
+	setCellValue22(`common${personIndex}_2`, genResult[personIndex]);
+	setCellValue22(`spiritualDestination_${personIndex}`, commonResult[personIndex]);
 }
 
 function populateB(i) {
