@@ -138,6 +138,9 @@ let sky = [];
 let earth = [];
 let personalDestinationResult = [];
 
+let paternity = [];
+let maternity = [];
+
 /* ------------------------------------------------------------------------- */
 /* --------- CALCULATE ----------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -483,12 +486,17 @@ function setCellValue22(id, value)
 }
 
 function populateA(i) {
+	paternity[i] = base22(dotLL30[i] + dotLL70[i]);
+	maternity[i] = base22(dotLL10[i] + dotLL50[i]);
+	
 	setCellValue22("mat1_" + i, dotLL30[i]);
 	setCellValue22("mat2_" + i, dotLL70[i]);
 	setCellValue22("mat3_" + i, (dotLL30[i] + dotLL70[i]));
 	setCellValue22("pat1_" + i, dotLL10[i]);
 	setCellValue22("pat2_" + i, dotLL50[i]);
 	setCellValue22("pat3_" + i, (dotLL10[i] + dotLL50[i]));
+	debugger;
+	setCellValue22("genResult_" + i, paternity[i] + maternity[i]);
 }
 
 function populatePersonalDestination(personIndex) {
@@ -497,6 +505,11 @@ function populatePersonalDestination(personIndex) {
 	setCellValue22("personalDestination_" + personIndex, personalDestinationResult[personIndex]);
 };
 
+function calcSpiritualDestination(personIndex) {
+	setCellValue22(`common${personIndex}_1`, personalDestinationResult[personIndex]);
+	setCellValue22(`common${personIndex}_2`, paternity[personIndex] + maternity[personIndex]);
+	setCellValue22(`spiritualDestination_${personIndex}`, personalDestinationResult[personIndex]);
+}
 
 function populateB(i) {
 	setCellValue22("cell_a1_" + i, dotLL0[i]);
@@ -633,6 +646,7 @@ function calculate() {
 
 		populatePersonalDestination(personIndex);
 
+		calcSpiritualDestination(personIndex);
 
 		document.querySelector('#panel1').classList.remove("d-none");
 
@@ -662,6 +676,8 @@ function calculate() {
 			);
 	
 			populatePersonalDestination(personIndex);
+
+			calcSpiritualDestination(personIndex);
 
 			document.querySelector('#panelX').classList.remove("d-none");
 			document.querySelector('#panel2').classList.remove("d-none");
