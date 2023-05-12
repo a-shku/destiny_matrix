@@ -1,12 +1,15 @@
 const dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\.](0?[1-9]|1[012])[\/\.]\d{4}$/;
 
 const svgNS = "http://www.w3.org/2000/svg";
-var svg;
+// var svg;
 var svgLayer;
 
-var svg_x = document.getElementsByTagName("svg")[0];
-var svg_0 = document.getElementsByTagName("svg")[1];
-var svg_1 = document.getElementsByTagName("svg")[2];
+const svg_x = document.getElementById("svg_x");
+// const svg_0 = document.getElementById("svg_0");
+// const svg_1 = document.getElementById("svg_1");
+
+const svg_0 = elementFromHTMLString(getMatrixTemplate("svg_0"));
+const svg_1 = elementFromHTMLString(getMatrixTemplate("svg_1"));
 
 var svgLayer_x;
 var svgLayer_0;
@@ -148,109 +151,109 @@ let commonResult = [];
 /* --------- CALCULATE ----------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-function calc(i, dateVal) {
-    console.log("person", i, dateVal);
+function calc(personIndex, dateVal) {
+    console.log("person", personIndex, dateVal);
 
     var dd = dateVal.split(".")[0];
     var mm = dateVal.split(".")[1];
     var yyyy = dateVal.split(".")[2];
 
-    dotLL0[i] = parseInt(sum22(dd));
-    dotLL20[i] = parseInt(sum22(mm));
-    dotLL40[i] = parseInt(sum22(yyyy.toString()));
-    dotLL60[i] = parseInt(sum22(dd + mm + yyyy));
+    dotLL0[personIndex] = parseInt(sum22(dd));
+    dotLL20[personIndex] = parseInt(sum22(mm));
+    dotLL40[personIndex] = parseInt(sum22(yyyy.toString()));
+    dotLL60[personIndex] = parseInt(sum22(dd + mm + yyyy));
 
-    dotCenter[i] = base22(dotLL0[i] + dotLL20[i] + dotLL40[i] + dotLL60[i]);
+    dotCenter[personIndex] = base22(dotLL0[personIndex] + dotLL20[personIndex] + dotLL40[personIndex] + dotLL60[personIndex]);
 
-    dotLL10[i] = base22(dotLL0[i] + dotLL20[i]);
-    dotLL30[i] = base22(dotLL20[i] + dotLL40[i]);
-    dotLL50[i] = base22(dotLL40[i] + dotLL60[i]);
-    dotLL70[i] = base22(dotLL0[i] + dotLL60[i]);
+    dotLL10[personIndex] = base22(dotLL0[personIndex] + dotLL20[personIndex]);
+    dotLL30[personIndex] = base22(dotLL20[personIndex] + dotLL40[personIndex]);
+    dotLL50[personIndex] = base22(dotLL40[personIndex] + dotLL60[personIndex]);
+    dotLL70[personIndex] = base22(dotLL0[personIndex] + dotLL60[personIndex]);
 
-    dotCenterGen[i] = base22(dotLL10[i] + dotLL30[i] + dotLL50[i] + dotLL70[i]);
+    dotCenterGen[personIndex] = base22(dotLL10[personIndex] + dotLL30[personIndex] + dotLL50[personIndex] + dotLL70[personIndex]);
 
-    dotMM02[i] = base22(dotCenter[i] + dotLL0[i]);
-    dotMM01[i] = base22(dotMM02[i] + dotLL0[i]);
-    dotMM22[i] = base22(dotCenter[i] + dotLL20[i]);
-    dotMM21[i] = base22(dotMM22[i] + dotLL20[i]);
-    dotMM42[i] = base22(dotCenter[i] + dotLL40[i]);
-    dotMM41[i] = base22(dotMM42[i] + dotLL40[i]);
-    dotMM62[i] = base22(dotCenter[i] + dotLL60[i]);
-    dotMM61[i] = base22(dotMM62[i] + dotLL60[i]);
+    dotMM02[personIndex] = base22(dotCenter[personIndex] + dotLL0[personIndex]);
+    dotMM01[personIndex] = base22(dotMM02[personIndex] + dotLL0[personIndex]);
+    dotMM22[personIndex] = base22(dotCenter[personIndex] + dotLL20[personIndex]);
+    dotMM21[personIndex] = base22(dotMM22[personIndex] + dotLL20[personIndex]);
+    dotMM42[personIndex] = base22(dotCenter[personIndex] + dotLL40[personIndex]);
+    dotMM41[personIndex] = base22(dotMM42[personIndex] + dotLL40[personIndex]);
+    dotMM62[personIndex] = base22(dotCenter[personIndex] + dotLL60[personIndex]);
+    dotMM61[personIndex] = base22(dotMM62[personIndex] + dotLL60[personIndex]);
 
-    dotSS11[i] = base22(dotLL0[i] + dotLL20[i]);
-    dotSS12[i] = base22(dotMM01[i] + dotMM21[i]);
-    dotSS13[i] = base22(dotMM02[i] + dotMM22[i]);
-    dotSS51[i] = base22(dotLL40[i] + dotLL60[i]);
-    dotSS52[i] = base22(dotMM41[i] + dotMM61[i]);
-    dotSS53[i] = base22(dotMM42[i] + dotMM62[i]);
+    dotSS11[personIndex] = base22(dotLL0[personIndex] + dotLL20[personIndex]);
+    dotSS12[personIndex] = base22(dotMM01[personIndex] + dotMM21[personIndex]);
+    dotSS13[personIndex] = base22(dotMM02[personIndex] + dotMM22[personIndex]);
+    dotSS51[personIndex] = base22(dotLL40[personIndex] + dotLL60[personIndex]);
+    dotSS52[personIndex] = base22(dotMM41[personIndex] + dotMM61[personIndex]);
+    dotSS53[personIndex] = base22(dotMM42[personIndex] + dotMM62[personIndex]);
 
-    dotMMC1[i] = base22(dotLL10[i] + dotLL30[i] + dotLL50[i] + dotLL70[i]);
-    dotSSC1[i] = base22(dotCenter[i] + dotLL40[i]);
+    dotMMC1[personIndex] = base22(dotLL10[personIndex] + dotLL30[personIndex] + dotLL50[personIndex] + dotLL70[personIndex]);
+    dotSSC1[personIndex] = base22(dotCenter[personIndex] + dotLL40[personIndex]);
 
-    dotXS5[i] = base22(dotLL0[i] + dotLL10[i]);
-    dotXS3[i] = base22(dotLL0[i] + dotXS5[i]);
-    dotXS7[i] = base22(dotXS5[i] + dotLL10[i]);
-    dotXS2[i] = base22(dotLL0[i] + dotXS3[i]);
-    dotXS4[i] = base22(dotXS3[i] + dotXS5[i]);
-    dotXS6[i] = base22(dotXS5[i] + dotXS7[i]);
-    dotXS8[i] = base22(dotXS7[i] + dotLL10[i]);
+    dotXS5[personIndex] = base22(dotLL0[personIndex] + dotLL10[personIndex]);
+    dotXS3[personIndex] = base22(dotLL0[personIndex] + dotXS5[personIndex]);
+    dotXS7[personIndex] = base22(dotXS5[personIndex] + dotLL10[personIndex]);
+    dotXS2[personIndex] = base22(dotLL0[personIndex] + dotXS3[personIndex]);
+    dotXS4[personIndex] = base22(dotXS3[personIndex] + dotXS5[personIndex]);
+    dotXS6[personIndex] = base22(dotXS5[personIndex] + dotXS7[personIndex]);
+    dotXS8[personIndex] = base22(dotXS7[personIndex] + dotLL10[personIndex]);
 
-    dotXS15[i] = base22(dotLL10[i] + dotLL20[i]);
-    dotXS13[i] = base22(dotLL10[i] + dotXS15[i]);
-    dotXS17[i] = base22(dotXS15[i] + dotLL20[i]);
-    dotXS12[i] = base22(dotLL10[i] + dotXS13[i]);
-    dotXS14[i] = base22(dotXS13[i] + dotXS15[i]);
-    dotXS16[i] = base22(dotXS15[i] + dotXS17[i]);
-    dotXS18[i] = base22(dotXS17[i] + dotLL20[i]);
+    dotXS15[personIndex] = base22(dotLL10[personIndex] + dotLL20[personIndex]);
+    dotXS13[personIndex] = base22(dotLL10[personIndex] + dotXS15[personIndex]);
+    dotXS17[personIndex] = base22(dotXS15[personIndex] + dotLL20[personIndex]);
+    dotXS12[personIndex] = base22(dotLL10[personIndex] + dotXS13[personIndex]);
+    dotXS14[personIndex] = base22(dotXS13[personIndex] + dotXS15[personIndex]);
+    dotXS16[personIndex] = base22(dotXS15[personIndex] + dotXS17[personIndex]);
+    dotXS18[personIndex] = base22(dotXS17[personIndex] + dotLL20[personIndex]);
 
-    dotXS25[i] = base22(dotLL20[i] + dotLL30[i]);
-    dotXS23[i] = base22(dotLL20[i] + dotXS25[i]);
-    dotXS27[i] = base22(dotXS25[i] + dotLL30[i]);
-    dotXS22[i] = base22(dotLL20[i] + dotXS23[i]);
-    dotXS24[i] = base22(dotXS23[i] + dotXS25[i]);
-    dotXS26[i] = base22(dotXS25[i] + dotXS27[i]);
-    dotXS28[i] = base22(dotXS27[i] + dotLL30[i]);
+    dotXS25[personIndex] = base22(dotLL20[personIndex] + dotLL30[personIndex]);
+    dotXS23[personIndex] = base22(dotLL20[personIndex] + dotXS25[personIndex]);
+    dotXS27[personIndex] = base22(dotXS25[personIndex] + dotLL30[personIndex]);
+    dotXS22[personIndex] = base22(dotLL20[personIndex] + dotXS23[personIndex]);
+    dotXS24[personIndex] = base22(dotXS23[personIndex] + dotXS25[personIndex]);
+    dotXS26[personIndex] = base22(dotXS25[personIndex] + dotXS27[personIndex]);
+    dotXS28[personIndex] = base22(dotXS27[personIndex] + dotLL30[personIndex]);
 
-    dotXS35[i] = base22(dotLL30[i] + dotLL40[i]);
-    dotXS33[i] = base22(dotLL30[i] + dotXS35[i]);
-    dotXS37[i] = base22(dotXS35[i] + dotLL40[i]);
-    dotXS32[i] = base22(dotLL30[i] + dotXS33[i]);
-    dotXS34[i] = base22(dotXS33[i] + dotXS35[i]);
-    dotXS36[i] = base22(dotXS35[i] + dotXS37[i]);
-    dotXS38[i] = base22(dotXS37[i] + dotLL40[i]);
+    dotXS35[personIndex] = base22(dotLL30[personIndex] + dotLL40[personIndex]);
+    dotXS33[personIndex] = base22(dotLL30[personIndex] + dotXS35[personIndex]);
+    dotXS37[personIndex] = base22(dotXS35[personIndex] + dotLL40[personIndex]);
+    dotXS32[personIndex] = base22(dotLL30[personIndex] + dotXS33[personIndex]);
+    dotXS34[personIndex] = base22(dotXS33[personIndex] + dotXS35[personIndex]);
+    dotXS36[personIndex] = base22(dotXS35[personIndex] + dotXS37[personIndex]);
+    dotXS38[personIndex] = base22(dotXS37[personIndex] + dotLL40[personIndex]);
 
-    dotXS45[i] = base22(dotLL40[i] + dotLL50[i]);
-    dotXS43[i] = base22(dotLL40[i] + dotXS45[i]);
-    dotXS47[i] = base22(dotXS45[i] + dotLL50[i]);
-    dotXS42[i] = base22(dotLL40[i] + dotXS43[i]);
-    dotXS44[i] = base22(dotXS43[i] + dotXS45[i]);
-    dotXS46[i] = base22(dotXS45[i] + dotXS47[i]);
-    dotXS48[i] = base22(dotXS47[i] + dotLL50[i]);
+    dotXS45[personIndex] = base22(dotLL40[personIndex] + dotLL50[personIndex]);
+    dotXS43[personIndex] = base22(dotLL40[personIndex] + dotXS45[personIndex]);
+    dotXS47[personIndex] = base22(dotXS45[personIndex] + dotLL50[personIndex]);
+    dotXS42[personIndex] = base22(dotLL40[personIndex] + dotXS43[personIndex]);
+    dotXS44[personIndex] = base22(dotXS43[personIndex] + dotXS45[personIndex]);
+    dotXS46[personIndex] = base22(dotXS45[personIndex] + dotXS47[personIndex]);
+    dotXS48[personIndex] = base22(dotXS47[personIndex] + dotLL50[personIndex]);
 
-    dotXS55[i] = base22(dotLL50[i] + dotLL60[i]);
-    dotXS53[i] = base22(dotLL50[i] + dotXS55[i]);
-    dotXS57[i] = base22(dotXS55[i] + dotLL60[i]);
-    dotXS52[i] = base22(dotLL50[i] + dotXS53[i]);
-    dotXS54[i] = base22(dotXS53[i] + dotXS55[i]);
-    dotXS56[i] = base22(dotXS55[i] + dotXS57[i]);
-    dotXS58[i] = base22(dotXS57[i] + dotLL60[i]);
+    dotXS55[personIndex] = base22(dotLL50[personIndex] + dotLL60[personIndex]);
+    dotXS53[personIndex] = base22(dotLL50[personIndex] + dotXS55[personIndex]);
+    dotXS57[personIndex] = base22(dotXS55[personIndex] + dotLL60[personIndex]);
+    dotXS52[personIndex] = base22(dotLL50[personIndex] + dotXS53[personIndex]);
+    dotXS54[personIndex] = base22(dotXS53[personIndex] + dotXS55[personIndex]);
+    dotXS56[personIndex] = base22(dotXS55[personIndex] + dotXS57[personIndex]);
+    dotXS58[personIndex] = base22(dotXS57[personIndex] + dotLL60[personIndex]);
 
-    dotXS65[i] = base22(dotLL60[i] + dotLL70[i]);
-    dotXS63[i] = base22(dotLL60[i] + dotXS65[i]);
-    dotXS67[i] = base22(dotXS65[i] + dotLL70[i]);
-    dotXS62[i] = base22(dotLL60[i] + dotXS63[i]);
-    dotXS64[i] = base22(dotXS63[i] + dotXS65[i]);
-    dotXS66[i] = base22(dotXS65[i] + dotXS67[i]);
-    dotXS68[i] = base22(dotXS67[i] + dotLL70[i]);
+    dotXS65[personIndex] = base22(dotLL60[personIndex] + dotLL70[personIndex]);
+    dotXS63[personIndex] = base22(dotLL60[personIndex] + dotXS65[personIndex]);
+    dotXS67[personIndex] = base22(dotXS65[personIndex] + dotLL70[personIndex]);
+    dotXS62[personIndex] = base22(dotLL60[personIndex] + dotXS63[personIndex]);
+    dotXS64[personIndex] = base22(dotXS63[personIndex] + dotXS65[personIndex]);
+    dotXS66[personIndex] = base22(dotXS65[personIndex] + dotXS67[personIndex]);
+    dotXS68[personIndex] = base22(dotXS67[personIndex] + dotLL70[personIndex]);
 
-    dotXS75[i] = base22(dotLL70[i] + dotLL0[i]);
-    dotXS73[i] = base22(dotLL70[i] + dotXS75[i]);
-    dotXS77[i] = base22(dotXS75[i] + dotLL0[i]);
-    dotXS72[i] = base22(dotLL70[i] + dotXS73[i]);
-    dotXS74[i] = base22(dotXS73[i] + dotXS75[i]);
-    dotXS76[i] = base22(dotXS75[i] + dotXS77[i]);
-    dotXS78[i] = base22(dotXS77[i] + dotLL0[i]);
+    dotXS75[personIndex] = base22(dotLL70[personIndex] + dotLL0[personIndex]);
+    dotXS73[personIndex] = base22(dotLL70[personIndex] + dotXS75[personIndex]);
+    dotXS77[personIndex] = base22(dotXS75[personIndex] + dotLL0[personIndex]);
+    dotXS72[personIndex] = base22(dotLL70[personIndex] + dotXS73[personIndex]);
+    dotXS74[personIndex] = base22(dotXS73[personIndex] + dotXS75[personIndex]);
+    dotXS76[personIndex] = base22(dotXS75[personIndex] + dotXS77[personIndex]);
+    dotXS78[personIndex] = base22(dotXS77[personIndex] + dotLL0[personIndex]);
 }
 
 function calc_x() {
@@ -328,7 +331,7 @@ function base22(value) {
 /* --------- POPULATE ------------------------------------------------------ */
 /* ------------------------------------------------------------------------- */
 
-function addSvgText_(x, y, value, fontSize, color) {
+function addSvgText(x, y, value, fontSize, color = "#fff") {
     var svgText = document.createElementNS(svgNS, "text");
     svgText.setAttributeNS(null, "font-family", "Verdana");
     svgText.setAttributeNS(null, "font-size", fontSize);
@@ -341,12 +344,8 @@ function addSvgText_(x, y, value, fontSize, color) {
     svgLayer.appendChild(svgText);
 }
 
-function addSvgText(x, y, value, fontSize) {
-    addSvgText_(x, y, value, fontSize, "#fff");
-}
-
 function addAgeValue(x, y, value) {
-    addSvgText_(x, y, value, "3", "#666");
+    addSvgText(x, y, value, "3", "#666");
 }
 
 function fillSvgX() {
@@ -544,8 +543,8 @@ function populateB(i) {
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-function setSvg_x() {
-    svg = svg_x;
+function setSvg_x(svg) {
+    // svg = svg_x;
 
     if (typeof svgLayer_x != "undefined" && svgLayer_x != null) {
         svgLayer_x.parentNode.removeChild(svgLayer_x);
@@ -557,9 +556,9 @@ function setSvg_x() {
     svgLayer = svgLayer_x;
 }
 
-function setSvg_0() {
+function setSvg_0(svg) {
     /* The svg_0 is var svg_0 = document.getElementsByTagName("svg")[1];*/
-    svg = svg_0;
+    // svg = svg_0;
 
     if (typeof svgLayer_0 != "undefined" && svgLayer_0 != null) {
         svgLayer_0.parentNode.removeChild(svgLayer_0);
@@ -571,8 +570,8 @@ function setSvg_0() {
     svgLayer = svgLayer_0;
 }
 
-function setSvg_1() {
-    svg = svg_1;
+function setSvg_1(svg) {
+    // svg = svg_1;
 
     if (typeof svgLayer_1 != "undefined" && svgLayer_1 != null) {
         svgLayer_1.parentNode.removeChild(svgLayer_1);
@@ -619,24 +618,19 @@ function calculate(person1, person2) {
 
         calc(personIndex, dateVal_0);
 
-        setSvg_0();
+        setSvg_0(svg_0);
         fillSvg(personIndex);
 
         populateA(personIndex);
         populateB(personIndex);
 
-		calcPersonalDestination(
-			personIndex,
-			dotLL20[personIndex],
-			dotLL60[personIndex],
-			dotLL0[personIndex],
-			dotLL40[personIndex]
-		);
+        calcPersonalDestination(personIndex, dotLL20[personIndex], dotLL60[personIndex], dotLL0[personIndex], dotLL40[personIndex]);
 
         populatePersonalDestination(personIndex);
 
         calcSpiritualDestination(personIndex);
 
+        document.getElementById("svgContainerPersonal").appendChild(svg_0);
         document.querySelector("#panel1").classList.remove("d-none");
 
         if (dateVal_1?.match(dateformat)) {
@@ -647,27 +641,22 @@ function calculate(person1, person2) {
             calc(personIndex, dateVal_1);
             calc_x();
 
-            setSvg_1();
+            setSvg_1(svg_1);
             fillSvg(personIndex);
 
-            setSvg_x();
+            setSvg_x(svg_x);
             fillSvgX();
 
             populateA(personIndex);
             populateB(personIndex);
 
-			calcPersonalDestination(
-				personIndex,
-				dotLL20[personIndex],
-				dotLL60[personIndex],
-				dotLL0[personIndex],
-				dotLL40[personIndex]
-			);
+            calcPersonalDestination(personIndex, dotLL20[personIndex], dotLL60[personIndex], dotLL0[personIndex], dotLL40[personIndex]);
 
             populatePersonalDestination(personIndex);
 
             calcSpiritualDestination(personIndex);
 
+            document.getElementById("svgContainerPartner_1").appendChild(svg_1);
             document.querySelector("#panelX").classList.remove("d-none");
             document.querySelector("#panel2").classList.remove("d-none");
         }
