@@ -11,10 +11,6 @@ const svg_x = document.getElementById("svg_x");
 const svg_0 = elementFromHTMLString(getMatrixTemplate("svg_0"));
 const svg_1 = elementFromHTMLString(getMatrixTemplate("svg_1"));
 
-var svgLayer_x;
-var svgLayer_0;
-var svgLayer_1;
-
 /* ------------------------------------------------------------------------- */
 
 var dotLL0 = [];
@@ -543,44 +539,18 @@ function populateB(i) {
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- */
 
-function setSvg_x(svg) {
-    // svg = svg_x;
+function setSvgUniversal(svg, id) {
+    let svgContent$ = svg.getElementById(id);
 
-    if (typeof svgLayer_x != "undefined" && svgLayer_x != null) {
-        svgLayer_x.parentNode.removeChild(svgLayer_x);
+    if (typeof svgContent$ != "undefined" && svgContent$ != null) {
+        svgContent$.parentNode.removeChild(svgContent$);
     }
-    svgLayer_x = document.createElementNS(svgNS, "g");
-    svgLayer_x.setAttributeNS(null, "id", "svgGroupLayer_compatibility");
-    svg.appendChild(svgLayer_x);
 
-    svgLayer = svgLayer_x;
-}
+    svgContent$ = document.createElementNS(svgNS, "g");
+    svgContent$.setAttributeNS(null, "id", id);
+    svg.appendChild(svgContent$);
 
-function setSvg_0(svg) {
-    /* The svg_0 is var svg_0 = document.getElementsByTagName("svg")[1];*/
-    // svg = svg_0;
-
-    if (typeof svgLayer_0 != "undefined" && svgLayer_0 != null) {
-        svgLayer_0.parentNode.removeChild(svgLayer_0);
-    }
-    svgLayer_0 = document.createElementNS(svgNS, "g");
-    svgLayer_0.setAttributeNS(null, "id", "svgGroupLayer_0");
-    svg.appendChild(svgLayer_0);
-
-    svgLayer = svgLayer_0;
-}
-
-function setSvg_1(svg) {
-    // svg = svg_1;
-
-    if (typeof svgLayer_1 != "undefined" && svgLayer_1 != null) {
-        svgLayer_1.parentNode.removeChild(svgLayer_1);
-    }
-    svgLayer_1 = document.createElementNS(svgNS, "g");
-    svgLayer_1.setAttributeNS(null, "id", "svgGroupLayer_1");
-    svg.appendChild(svgLayer_1);
-
-    svgLayer = svgLayer_1;
+    return svgContent$;
 }
 
 // ---------------------------------------------------------------
@@ -618,7 +588,7 @@ function calculate(person1, person2) {
 
         calc(personIndex, dateVal_0);
 
-        setSvg_0(svg_0);
+        svgLayer = setSvgUniversal(svg_0, "svgGroupLayer_0");
         fillSvg(personIndex);
 
         populateA(personIndex);
@@ -641,10 +611,10 @@ function calculate(person1, person2) {
             calc(personIndex, dateVal_1);
             calc_x();
 
-            setSvg_1(svg_1);
+            svgLayer = setSvgUniversal(svg_1, "svgGroupLayer_1");
             fillSvg(personIndex);
 
-            setSvg_x(svg_x);
+            svgLayer = setSvgUniversal(svg_x, "svgGroupLayer_compatibility");
             fillSvgX();
 
             populateA(personIndex);
