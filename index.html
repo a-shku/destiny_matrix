@@ -38,10 +38,10 @@
 
 				<div class="input-group mb-3">
 					<input type="text" maxlength="10" class="form-control" pattern="[0-9.]" id="inputDatePersonal"
-						autofocus placeholder="dd.mm.yyyy" aria-label="dd.mm.yyyy" aria-describedby="button-addon2">
+						autofocus placeholder="dd.mm.yyyy" aria-label="dd.mm.yyyy">
 
-					<button class="btn btn-outline-secondary" type="button" id="button-addon3"
-						title="calculate personal" onclick="calcPersonal();">Рассчитать
+					<button class="btn btn-outline-secondary" type="button" title="calculate personal"
+						onclick="calculatePersonal(inputDatePersonal.value);">Рассчитать
 					</button>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 
 				<div class="input-group mb-3">
 					<input type="text" maxlength="10" class="form-control" pattern="[0-9.]" id="inputDatePartner1"
-						placeholder="dd.mm.yyyy" aria-label="dd.mm.yyyy" aria-describedby="button-addon2">
+						placeholder="dd.mm.yyyy" aria-label="dd.mm.yyyy">
 				</div>
 
 			</div>
@@ -73,7 +73,7 @@
 					<input type="text" maxlength="10" class="form-control" id="inputDatePartner2"
 						placeholder="dd.mm.yyyy" aria-label="dd.mm.yyyy" aria-describedby="button-addon2">
 					<button class="btn btn-outline-secondary" type="button" id="button-addon4" title="Calcular"
-						onclick="calc_compatibility();">
+						onclick="calculate(inputDatePartner1.value, inputDatePartner2.value);">
 						Рассчитать
 					</button>
 				</div>
@@ -82,7 +82,7 @@
 
 		</div>
 
-		<div id="panelX" class="d-none">
+		<div id="panelX" class="d-none" style="border: solid 2px #66a73b">
 			<div class="container mt-5">
 				<h2 class="row justify-content-center">
 					Матрица совместимости
@@ -151,11 +151,30 @@
 				</g>
 				<g id="textos"> </g>
 			</svg>
+
+			<div class="container">
+				<h2 class="row justify-content-center" id="age_partner_1">Matrix 2</h2>
+
+				<div id="svgContainerPartner_1">
+
+				</div>
+			</div>
+
+			<div class="container">
+				<h2 class="row justify-content-center" id="age_partner_2">Matrix 2</h2>
+
+				<div id="svgContainerPartner_2">
+
+				</div>
+			</div>
+
+
+
 		</div>
 
-		<div id="panel1" class="d-none">
+		<div id="panel_personal" class="d-none" style="border: solid 2px #000">
 			<div class="container mt-5">
-				<h2 class="row justify-content-center" id="age_0">Matrix 1</h2>
+				<h2 class="row justify-content-center" id="age_personal">Matrix 1</h2>
 			</div>
 
 			<div id="svgContainerPersonal">
@@ -270,130 +289,6 @@
 					</tr>
 				</table>
 
-			</div>
-
-		</div>
-
-		<div id="panel2" class="d-none">
-			<div class="container mt-5">
-				<h2 class="row justify-content-center" id="age_1">Matrix 2</h2>
-			</div>
-
-			<div id="svgContainerPartner_1">
-
-			</div>
-
-			<!-- <div id="svgContainerPartner_2">
-				<svg id="svg_2"></svg>
-			</div> -->
-
-
-			<div class="mx-auto w-60 p-3">
-				<table>
-					<tr>
-						<th>Небо</th>
-						<td id="sky_1" class="cell_gray"></td>
-						<td id="personalDestination_1" class="cell_gray" rowspan="2"></td>
-					</tr>
-					<tr>
-						<th>Земля</th>
-						<td id="earth_1" class="cell_gray"></td>
-						<td class="cell_gray"></td>
-					</tr>
-				</table>
-			</div>
-
-			<div class="mx-auto w-60 p-3">
-				<table>
-					<tr>
-						<th>Отцовская линия</th>
-						<td id="pat1_1" class="cell_gray">xx</td>
-						<td id="pat2_1" class="cell_gray">xx</td>
-						<td id="pat3_1" class="cell_gray">xx</td>
-						<td id="genResult_1" class="cell_gray" rowspan="2">xx</td>
-					</tr>
-					<tr>
-						<th>Материнская линия</th>
-						<td id="mat1_1" class="cell_gray">xx</td>
-						<td id="mat2_1" class="cell_gray">xx</td>
-						<td id="mat3_1" class="cell_gray">xx</td>
-						<td class="cell_gray"></td>
-					</tr>
-				</table>
-			</div>
-
-			<div class="mx-auto w-60 p-3">
-				<table>
-					<tr>
-						<th>Общее</th>
-						<td id="common1_1" class="cell_gray"></td>
-						<td id="common1_2" class="cell_gray"></td>
-						<td id="spiritualDestination_1" class="cell_gray"></td>
-					</tr>
-				</table>
-			</div>
-
-			<div class="container mt-2">
-				<h2 class="row justify-content-center">Карта здоровья</h2>
-			</div>
-
-			<div class="mx-auto w-100 p-3">
-				<table>
-					<tr>
-						<th style="width:40%">Чакра</th>
-						<th>Физический</th>
-						<th>Энергия</th>
-						<th>Эмоции</th>
-					</tr>
-					<tr>
-						<td class="cell_sahasrara">Sahasrara</td>
-						<td id="cell_a1_1" class="cell_sahasrara">xx</td>
-						<td id="cell_a2_1" class="cell_sahasrara">xx</td>
-						<td id="cell_a3_1" class="cell_sahasrara">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_ajna">Ajna</td>
-						<td id="cell_b1_1" class="cell_ajna">xx</td>
-						<td id="cell_b2_1" class="cell_ajna">xx</td>
-						<td id="cell_b3_1" class="cell_ajna">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_vishuddha">Vishuddha</td>
-						<td id="cell_c1_1" class="cell_vishuddha">xx</td>
-						<td id="cell_c2_1" class="cell_vishuddha">xx</td>
-						<td id="cell_c3_1" class="cell_vishuddha">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_anahata">Anahata</td>
-						<td id="cell_d1_1" class="cell_anahata">xx</td>
-						<td id="cell_d2_1" class="cell_anahata">xx</td>
-						<td id="cell_d3_1" class="cell_anahata">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_manipura">Manipura</td>
-						<td id="cell_e1_1" class="cell_manipura">xx</td>
-						<td id="cell_e2_1" class="cell_manipura">xx</td>
-						<td id="cell_e3_1" class="cell_manipura">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_svadhisthana">Svadhisthana</td>
-						<td id="cell_f1_1" class="cell_svadhisthana">xx</td>
-						<td id="cell_f2_1" class="cell_svadhisthana">xx</td>
-						<td id="cell_f3_1" class="cell_svadhisthana">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_muladhara">Muladhara</td>
-						<td id="cell_g1_1" class="cell_muladhara">xx</td>
-						<td id="cell_g2_1" class="cell_muladhara">xx</td>
-						<td id="cell_g3_1" class="cell_muladhara">xx</td>
-					</tr>
-					<tr>
-						<td class="cell_total">Общий</td>
-						<td id="cell_h1_1" class="cell_total">xx</td>
-						<td id="cell_h2_1" class="cell_total">xx</td>
-						<td id="cell_h3_1" class="cell_total">xx</td>
-					</tr>
-				</table>
 			</div>
 
 		</div>

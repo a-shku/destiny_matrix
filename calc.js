@@ -1,15 +1,13 @@
 const dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\.](0?[1-9]|1[012])[\/\.]\d{4}$/;
 
 const svgNS = "http://www.w3.org/2000/svg";
-// var svg;
 var svgLayer;
 
 const svg_x = document.getElementById("svg_x");
-// const svg_0 = document.getElementById("svg_0");
-// const svg_1 = document.getElementById("svg_1");
 
 const svg_0 = elementFromHTMLString(getMatrixTemplate("svg_0"));
 const svg_1 = elementFromHTMLString(getMatrixTemplate("svg_1"));
+const svg_2 = elementFromHTMLString(getMatrixTemplate("svg_2"));
 
 /* ------------------------------------------------------------------------- */
 
@@ -572,63 +570,64 @@ function getAge(date) {
 
 // ---------------------------------------------------------------
 
+function calculatePersonal(personDate) {
+    if (!personDate?.match(dateformat)) {
+        return;
+    }
+
+    const personIndex = 0;
+    /*title of person section */
+    var age_personal = document.getElementById("age_personal");
+    age_personal.innerHTML = getAge(personDate);
+
+    calc(personIndex, personDate);
+
+    svgLayer = setSvgUniversal(svg_0, "svgGroupLayer_0");
+    fillSvg(personIndex);
+
+    populateA(personIndex);
+    populateB(personIndex);
+
+    calcPersonalDestination(personIndex, dotLL20[personIndex], dotLL60[personIndex], dotLL0[personIndex], dotLL40[personIndex]);
+
+    populatePersonalDestination(personIndex);
+
+    calcSpiritualDestination(personIndex);
+
+    document.getElementById("svgContainerPersonal").appendChild(svg_0);
+    document.querySelector("#panel_personal").classList.remove("d-none");
+}
+
 function calculate(person1, person2) {
-    document.querySelector("#panelX, #panel1, #panel2").classList.add("d-none");
+    if (person1?.match(dateformat) && person2?.match(dateformat)) {
+        const personIndex_1 = 1;
+        const personIndex_2 = 2;
+        var age_partner_1 = document.getElementById("age_partner_1");
+        age_partner_1.innerHTML = getAge(person1);
 
-    // var dateVal_0 = document.getElementById('inputDate1').value;
-    // var dateVal_1 = document.getElementById('inputDate2').value;
-    const dateVal_0 = person1;
-    const dateVal_1 = person2;
+        calc(personIndex_1, person1);
+        calc_x();
 
-    if (dateVal_0?.match(dateformat)) {
-        const personIndex = 0;
-        /*title of person section */
-        var age_0 = document.getElementById("age_0");
-        age_0.innerHTML = getAge(dateVal_0);
+        svgLayer = setSvgUniversal(svg_1, "svgGroupLayer_1");
+        fillSvg(personIndex_1);
 
-        calc(personIndex, dateVal_0);
+        svgLayer = setSvgUniversal(svg_x, "svgGroupLayer_compatibility");
+        fillSvgX();
 
-        svgLayer = setSvgUniversal(svg_0, "svgGroupLayer_0");
-        fillSvg(personIndex);
+        document.getElementById("svgContainerPartner_1").appendChild(svg_1);
 
-        populateA(personIndex);
-        populateB(personIndex);
+        //////////////////////////
+        var age_partner_2 = document.getElementById("age_partner_2");
+        age_partner_2.innerHTML = getAge(person2);
 
-        calcPersonalDestination(personIndex, dotLL20[personIndex], dotLL60[personIndex], dotLL0[personIndex], dotLL40[personIndex]);
+        calc(personIndex_2, person2);
+        calc_x();
 
-        populatePersonalDestination(personIndex);
+        svgLayer = setSvgUniversal(svg_2, "svgGroupLayer_2");
+        fillSvg(personIndex_2);
 
-        calcSpiritualDestination(personIndex);
-
-        document.getElementById("svgContainerPersonal").appendChild(svg_0);
-        document.querySelector("#panel1").classList.remove("d-none");
-
-        if (dateVal_1?.match(dateformat)) {
-            const personIndex = 1;
-            var age_1 = document.getElementById("age_1");
-            age_1.innerHTML = getAge(dateVal_1);
-
-            calc(personIndex, dateVal_1);
-            calc_x();
-
-            svgLayer = setSvgUniversal(svg_1, "svgGroupLayer_1");
-            fillSvg(personIndex);
-
-            svgLayer = setSvgUniversal(svg_x, "svgGroupLayer_compatibility");
-            fillSvgX();
-
-            populateA(personIndex);
-            populateB(personIndex);
-
-            calcPersonalDestination(personIndex, dotLL20[personIndex], dotLL60[personIndex], dotLL0[personIndex], dotLL40[personIndex]);
-
-            populatePersonalDestination(personIndex);
-
-            calcSpiritualDestination(personIndex);
-
-            document.getElementById("svgContainerPartner_1").appendChild(svg_1);
-            document.querySelector("#panelX").classList.remove("d-none");
-            document.querySelector("#panel2").classList.remove("d-none");
-        }
+        document.getElementById("svgContainerPartner_2").appendChild(svg_2);
+        ///////////////
+        document.querySelector("#panelX").classList.remove("d-none");
     }
 }

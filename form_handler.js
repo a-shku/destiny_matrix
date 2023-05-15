@@ -7,14 +7,6 @@ inputDatePartner1.addEventListener("input", dateEventMask);
 const inputDatePartner2 = document.getElementById("inputDatePartner2");
 inputDatePartner2.addEventListener("input", dateEventMask);
 
-function calcPersonal() {
-    // inputDate2.value = "";
-    calculate(inputDatePersonal.value);
-}
-function calc_compatibility() {
-    calculate(inputDatePartner1.value, inputDatePartner2.value);
-}
-
 function dateEventMask(e) {
     var val = e.data;
     var str = e.target.value;
